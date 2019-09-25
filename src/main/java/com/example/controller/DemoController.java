@@ -36,12 +36,8 @@ public class DemoController {
 	}
 
 	@RequestMapping("/help")
-	public String help(@ModelAttribute("user") User user,Model model) {
-		System.out.println("==============");
-		System.out.println(user.getName());
-		if (user!=null) {
-			model.addAttribute("user", user);
-		}
+	public String help(@ModelAttribute("user") User user, Model model) {
+		model.addAttribute("user", user);
 		return "help";
 	}
 
