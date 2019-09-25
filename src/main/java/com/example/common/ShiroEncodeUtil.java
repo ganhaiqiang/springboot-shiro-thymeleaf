@@ -19,6 +19,6 @@ public class ShiroEncodeUtil {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(MD5Pwd("admin", "123"));
+		System.out.println(MD5Pwd("server", "123"));
 	}
 }

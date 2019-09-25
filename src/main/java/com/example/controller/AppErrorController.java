@@ -18,8 +18,6 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.alibaba.fastjson.JSON;
-
 /**
  * @Desc: 错误页面
  * @author: GanHaiqiang
@@ -103,7 +101,6 @@ public class AppErrorController implements ErrorController {
 		Map<String, Object> map = errorAttributes.getErrorAttributes(webRequest, includeStackTrace);
 		String URL = request.getRequestURL().toString();
 		map.put("URL", URL);
-		System.out.println(JSON.toJSONString(map, true));
 		logger.debug("AppErrorController.method [error info]: status-" + map.get("status") + ", request url-" + URL);
 		return map;
 	}

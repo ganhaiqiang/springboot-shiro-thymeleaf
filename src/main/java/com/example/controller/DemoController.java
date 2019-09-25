@@ -12,9 +12,15 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
+
+import com.alibaba.fastjson.JSON;
+import com.example.entity.User;
 
 /**
  * @Desc: 测试
@@ -30,7 +36,12 @@ public class DemoController {
 	}
 
 	@RequestMapping("/help")
-	public String help() {
+	public String help(@ModelAttribute("user") User user,Model model) {
+		System.out.println("==============");
+		System.out.println(user.getName());
+		if (user!=null) {
+			model.addAttribute("user", user);
+		}
 		return "help";
 	}
 
@@ -40,7 +51,7 @@ public class DemoController {
 	}
 
 	@PostMapping("/login")
-	public String login(@RequestParam(required = true, name = "name") String name, String password, Model model) {
+	public String login(@RequestParam(required = true, name = "name") String name, String password, Model model, RedirectAttributes redirectAttributes) {
 		if (StringUtils.isBlank(name)) {
 			return "login";
 		}
@@ -57,6 +68,8 @@ public class DemoController {
 			/*
 			 * 无任何异常，则登录成功 跳转到test.html页面
 			 */
+			User user = (User) SecurityUtils.getSubject().getPrincipal();
+			redirectAttributes.addFlashAttribute("user", user);
 			return "redirect:/help"; // redirect：重定向（不带数据），而非转发请求（带数据）
 		} catch (UnknownAccountException e) {
 			// UnKnownAccountException登录失败：用户名不存在

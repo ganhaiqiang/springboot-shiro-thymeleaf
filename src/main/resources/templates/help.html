@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>shiro标签</title>
 </head>
 <body>
@@ -12,6 +12,8 @@
 	</p>
 	<!-- 认证通过或已记住的用户。 -->
 	<p shiro:user="">
+		<h1>欢迎,<span th:text="${user.name}"></span>登录</h1>
+		<h3><shiro:principal property='name' /></h3>
 		Welcome back John! Not John? Click <a href="login.html">here</a> to login.
 	</p>
 	<!-- 已认证通过的用户。不包含已记住的用户，这是与user标签的区别所在。 -->
@@ -66,5 +68,6 @@
 		You can see or delete users.
 	</p>
 	<a shiro:hasPermission="pp" href="createUser.html">Create a new User</a>
+	<a href="/logout">退出登录</a>
 </body>
 </html>
