@@ -1,6 +1,7 @@
 package com.example.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.example.dao.UserMapper;
@@ -19,11 +20,13 @@ public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 
 	@Override
+	@Cacheable(value = "userCache", key = "'UserService#findUserById'+#id")
 	public User findUserById(Integer id) {
 		return userMapper.selectByPrimaryKey(id);
 	}
 
 	@Override
+	@Cacheable(value = "userCache", key = "'UserService#findUserByName'+#name")
 	public User findUserByName(String name) {
 		User record = new User();
 		record.setName(name);
